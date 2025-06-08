@@ -23,7 +23,7 @@ namespace TestTask.MudBlazors.Pages.Import
         [Inject] private ExcelImporter<Product> ExcelImportProduct { get; set; } = null!;
         [Inject] private NavigationManager Navigation { get; set; } = null!;
 
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
         private SelectTable selectedTable = new SelectTable();
 

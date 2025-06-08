@@ -12,7 +12,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
     {
         private const string ErrorFieldRequired = "Field is required.";
 
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
         [Inject] private CategoryRepository CategoryRepository { get; set; } = null!;
         [Inject] private IMessageBox MessageDialog { get; set; } = null!;
 

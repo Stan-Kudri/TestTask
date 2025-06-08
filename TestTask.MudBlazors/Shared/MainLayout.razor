@@ -20,6 +20,7 @@
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
+<MudPopoverProvider />
 
 <MudLayout>
 
@@ -33,11 +34,11 @@
             <Authorized>
                 <MudMenu FullWidth="true" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" Style="align-items:center">
                     <ActivatorContent>
-                        <MudChip Icon="@MaterialDesignIcons.Normal.Account" Label="true" Class="pa-4"
-                                 Style="@($"color:{Colors.Grey.Lighten4};background:{Colors.LightBlue.Accent4};")">
-                                 @auth.User.Identity.Name
+                        <MudChip T="string" Icon="@MaterialDesignIcons.Normal.Account" Label="true" Class="pa-4"
+                                 Style="@($"color:{Colors.Gray.Lighten4};background:{Colors.LightBlue.Accent4};")">
+                            @auth.User.Identity.Name
                         </MudChip>
-                    </ActivatorContent>
+                    </ActivatorContent> 
                     <ChildContent>
                         <MudMenuItem Class="pa-1 red-text text-accent-2" Style="text-align:center" OnClick="LogoutAsync">Sign Out</MudMenuItem>
                     </ChildContent>

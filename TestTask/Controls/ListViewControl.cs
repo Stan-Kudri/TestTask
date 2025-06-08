@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using TestTask.BindingItem;
@@ -28,6 +29,7 @@ namespace TestTask.Controls
             InitializeComponent();
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public PageModel Page { get; set; } = new PageModel();
 
         public void Initialize(IListViewDataProvider provider, IMessageBox messageBox)

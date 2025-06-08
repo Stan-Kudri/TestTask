@@ -16,7 +16,7 @@ namespace TestTask.MudBlazors.Extension
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var dialog = await dialogService.ShowAsync<DialogYesNo>(title, dialogParameters, options);
             var result = await dialog.Result;
-            return result == null || !result.Cancelled;
+            return result == null || !result.Canceled;
         }
     }
 }

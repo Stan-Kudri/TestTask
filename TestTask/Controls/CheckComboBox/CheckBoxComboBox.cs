@@ -138,6 +138,7 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// The DataSource of the combobox. Refreshes the CheckBox wrappers when this is set.
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new object DataSource
         {
             get => base.DataSource;
@@ -155,6 +156,10 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// The ValueMember of the combobox. Refreshes the CheckBox wrappers when this is set.
         /// </summary>
+        /// <summary>
+        /// The ValueMember of the combobox. Refreshes the CheckBox wrappers when this is set.
+        /// </summary>          
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new string ValueMember
         {
             get => base.ValueMember;
@@ -175,6 +180,7 @@ namespace TestTask.Controls.CheckComboBox
         /// a concatenated Text of the items selected. This concatenation however is controlled by the Binded 
         /// object, since it owns that property.
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string DisplayMemberSingleItem
         {
             get
@@ -323,6 +329,7 @@ namespace TestTask.Controls.CheckComboBox
         /// </summary>
         [Description("The properties that will be assigned to the checkboxes as default values.")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public CheckBoxProperties CheckBoxProperties
         {
             get => _checkBoxProperties;
@@ -612,6 +619,7 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// A reference to the Item in ComboBox.Items that this object is extending.
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public object ComboBoxItem
         {
             get => _ComboBoxItem;

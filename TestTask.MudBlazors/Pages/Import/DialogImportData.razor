@@ -14,11 +14,19 @@
     <DialogActions>        
         <MudContainer Style="align-items:center">
             <MudFileUpload T="IBrowserFile" Accept=".xlsx,.xls,.xlsm" FilesChanged="UploadData">
-                <ButtonTemplate>           
-                    <MudButton HtmlTag="label" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled" Class="mr-4" for="@context.Id" title="Import Excel">Ok</MudButton>
-                    <MudButton OnClick="Cancel" Style="max-width: 60px; max-height : 30px;" Variant="Variant.Filled" >Cancel</MudButton>
-                </ButtonTemplate>
-            </MudFileUpload> 
+                <ActivatorContent>
+                    <ButtonTemplate>
+                        <MudButton HtmlTag="label"
+                                   Style="max-width: 60px; max-height: 30px;"
+                                   Variant="Variant.Filled"
+                                   Class="mr-4"         
+                                   title="Import Excel">Ok</MudButton>
+                        <MudButton OnClick="Cancel" 
+                                   Style="max-width: 60px; max-height: 30px;" 
+                                   Variant="Variant.Filled">Cancel</MudButton>
+                    </ButtonTemplate>
+                </ActivatorContent>
+            </MudFileUpload>
         </MudContainer>          
     </DialogActions>
 </MudDialog>

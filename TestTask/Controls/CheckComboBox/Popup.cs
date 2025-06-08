@@ -28,6 +28,7 @@ namespace TestTask.Controls.CheckComboBox
         /// </summary>
         /// <value><c>true</c> if pop-up uses the fade effect; otherwise, <c>false</c>.</value>
         /// <remarks>To use the fade effect, the FocusOnOpen property also has to be set to <c>true</c>.</remarks>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool UseFadeEffect
         {
             get { return fade; }
@@ -43,7 +44,8 @@ namespace TestTask.Controls.CheckComboBox
         /// Gets or sets a value indicating whether to focus the content after the pop-up has been opened.
         /// </summary>
         /// <value><c>true</c> if the content should be focused after the pop-up has been opened; otherwise, <c>false</c>.</value>
-        /// <remarks>If the FocusOnOpen property is set to <c>false</c>, then pop-up cannot use the fade effect.</remarks>
+        /// <remarks>If the FocusOnOpen property is set to <c>false</c>, then pop-up cannot use the fade effect.</remarks>             
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool FocusOnOpen
         {
             get { return focusOnOpen; }
@@ -55,6 +57,7 @@ namespace TestTask.Controls.CheckComboBox
         /// Gets or sets a value indicating whether presing the alt key should close the pop-up.
         /// </summary>
         /// <value><c>true</c> if presing the alt key does not close the pop-up; otherwise, <c>false</c>.</value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool AcceptAlt
         {
             get { return acceptAlt; }
@@ -70,6 +73,7 @@ namespace TestTask.Controls.CheckComboBox
         /// Gets or sets a value indicating whether this <see cref="PopupControl.Popup" /> is resizable.
         /// </summary>
         /// <value><c>true</c> if resizable; otherwise, <c>false</c>.</value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool Resizable
         {
             get { return resizable && _resizable; }
@@ -82,7 +86,8 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Gets or sets the size that is the lower limit that <see cref="M:System.Windows.Forms.Control.GetPreferredSize(System.Drawing.Size)" /> can specify.
         /// </summary>
-        /// <returns>An ordered pair of type <see cref="T:System.Drawing.Size" /> representing the width and height of a rectangle.</returns>
+        /// <returns>An ordered pair of type <see cref="T:System.Drawing.Size" /> representing the width and height of a rectangle.</returns>                 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new Size MinimumSize
         {
             get { return minSize; }
@@ -93,7 +98,8 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Gets or sets the size that is the upper limit that <see cref="M:System.Windows.Forms.Control.GetPreferredSize(System.Drawing.Size)" /> can specify.
         /// </summary>
-        /// <returns>An ordered pair of type <see cref="T:System.Drawing.Size" /> representing the width and height of a rectangle.</returns>
+        /// <returns>An ordered pair of type <see cref="T:System.Drawing.Size" /> representing the width and height of a rectangle.</returns>    
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new Size MaximumSize
         {
             get { return maxSize; }

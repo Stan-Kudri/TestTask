@@ -11,7 +11,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 {
     public partial class ProductTypeItemDialog : IItemDialog
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
         [Inject] private ProductTypeRepository ProductTypeRepository { get; set; } = null!;
         [Inject] private CategoryRepository CategoryRepository { get; set; } = null!;
         [Inject] private IMessageBox MessageDialog { get; set; } = null!;

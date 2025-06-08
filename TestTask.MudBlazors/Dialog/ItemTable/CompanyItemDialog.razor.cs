@@ -10,7 +10,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 {
     public partial class CompanyItemDialog : IItemDialog
     {
-        [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
         [Inject] private CompanyRepository CompanyRepository { get; set; } = null!;
         [Inject] private IMessageBox MessageDialog { get; set; } = null!;
 

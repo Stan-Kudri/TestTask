@@ -88,7 +88,7 @@ namespace TestTask.Core.Extension
                 }
 
                 var valueInDateTimeCell = cell.DateCellValue;
-                return Result<DateTime>.CreateSuccess(valueInDateTimeCell, self.RowNum);
+                return Result<DateTime>.CreateSuccess((DateTime)valueInDateTimeCell, self.RowNum);
             }
             catch
             {

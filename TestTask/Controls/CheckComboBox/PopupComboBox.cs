@@ -33,7 +33,8 @@ namespace TestTask.Controls.CheckComboBox
         /// <summary>
         /// Gets or sets the drop down control.
         /// </summary>
-        /// <value>The drop down control.</value>
+        /// <value>The drop down control.</value>        
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Control DropDownControl
         {
             get

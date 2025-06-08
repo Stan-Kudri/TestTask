@@ -41,7 +41,7 @@
         <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@Remove" Color="Color.Primary" Variant="Variant.Text" Disabled="@isSelectItems" Title="Remove Select Items" />
         <MudFileUpload T="IBrowserFile" Accept=".xlsx,.xls,.xlsm" FilesChanged="UploadFiles" style="padding:0; margin:0;">
             <ButtonTemplate>
-                <MudIconButton HtmlTag="label" Icon="@MaterialDesignIcons.Normal.FileImport" Color="Color.Primary" for="@context.Id" title="Import Excel" />
+                <MudIconButton HtmlTag="label" Icon="@MaterialDesignIcons.Normal.FileImport" Color="Color.Primary" title="Import Excel" />
             </ButtonTemplate>
         </MudFileUpload>
 

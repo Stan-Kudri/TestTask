@@ -17,7 +17,7 @@ namespace TestTask.MudBlazors.Pages.Export
         [Inject] private ProductSheetFiller ProductSheetFiller { get; set; } = null!;
         [Inject] private IJSRuntime JS { get; set; } = null!;
 
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
 
         private SelectTable selectedTable = new SelectTable();
 
