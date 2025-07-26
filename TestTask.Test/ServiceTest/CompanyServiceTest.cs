@@ -128,7 +128,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var companyRepository = new CompanyRepository(dbContext);
+            var companyRepository = new CompanyService(dbContext);
             await companyRepository.AddRangeAsync(companies);
 
             //Act
@@ -144,7 +144,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var companyRepository = new CompanyRepository(dbContext);
+            var companyRepository = new CompanyService(dbContext);
             dbContext.Company.AddRange(companies);
             await dbContext.SaveChangesAsync();
             await companyRepository.AddAsync(addCompany);
@@ -162,7 +162,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var companyRepository = new CompanyRepository(dbContext);
+            var companyRepository = new CompanyService(dbContext);
             dbContext.Company.AddRange(companies);
             await dbContext.SaveChangesAsync();
             await companyRepository.UpdataAsync(updateCompany);
@@ -180,7 +180,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var companyRepository = new CompanyRepository(dbContext);
+            var companyRepository = new CompanyService(dbContext);
             dbContext.Company.AddRange(companies);
             await dbContext.SaveChangesAsync();
             await companyRepository.RemoveRangeAsync(removeID);
@@ -198,7 +198,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var companyRepository = new CompanyRepository(dbContext);
+            var companyRepository = new CompanyService(dbContext);
             await companyRepository.AddAsync(company);
 
             //Act
@@ -214,7 +214,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var companyRepository = new CompanyRepository(dbContext);
+            var companyRepository = new CompanyService(dbContext);
             await companyRepository.AddRangeAsync(companies);
 
             //Assert

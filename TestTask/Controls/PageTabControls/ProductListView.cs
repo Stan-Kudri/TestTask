@@ -31,10 +31,10 @@ namespace TestTask.Controls.PageTabControls
         private const int IndexColumnIdType = 9;
 
         private IServiceProvider _serviceProvider;
-        private CompanyRepository _companyRepository;
-        private CategoryRepository _categoryRepository;
-        private ProductTypeRepository _typeRepository;
-        private ProductRepository _productRepository;
+        private CompanyService _companyRepository;
+        private CategoryService _categoryRepository;
+        private ProductTypeService _typeRepository;
+        private ProductService _productRepository;
 
         private IMessageBox _messageBox;
         private MessageByTable<Product> _messageByTable;
@@ -60,10 +60,10 @@ namespace TestTask.Controls.PageTabControls
         public void Initialize(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _productRepository = _serviceProvider.GetRequiredService<ProductRepository>();
-            _companyRepository = _serviceProvider.GetRequiredService<CompanyRepository>();
-            _categoryRepository = _serviceProvider.GetRequiredService<CategoryRepository>();
-            _typeRepository = _serviceProvider.GetRequiredService<ProductTypeRepository>();
+            _productRepository = _serviceProvider.GetRequiredService<ProductService>();
+            _companyRepository = _serviceProvider.GetRequiredService<CompanyService>();
+            _categoryRepository = _serviceProvider.GetRequiredService<CategoryService>();
+            _typeRepository = _serviceProvider.GetRequiredService<ProductTypeService>();
             _messageBox = _serviceProvider.GetRequiredService<IMessageBox>();
             _messageByTable = _serviceProvider.GetRequiredService<MessageByTable<Product>>();
             listView.Initialize(this, serviceProvider.GetRequiredService<IMessageBox>());

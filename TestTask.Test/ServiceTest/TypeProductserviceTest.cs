@@ -137,9 +137,9 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeProductService = new ProductTypeRepository(dbContext);
-            await categoryRepository.AddRangeAsync(categories);
+            var categoryService = new CategoryService(dbContext);
+            var typeProductService = new ProductTypeService(dbContext);
+            await categoryService.AddRangeAsync(categories);
             await typeProductService.AddRangeAsync(types);
 
             //Act
@@ -155,9 +155,9 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeProductService = new ProductTypeRepository(dbContext);
-            await categoryRepository.AddRangeAsync(categories);
+            var categoryService = new CategoryService(dbContext);
+            var typeProductService = new ProductTypeService(dbContext);
+            await categoryService.AddRangeAsync(categories);
             await typeProductService.AddRangeAsync(types);
             await typeProductService.AddAsync(addType);
 
@@ -174,9 +174,9 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeProductService = new ProductTypeRepository(dbContext);
-            await categoryRepository.AddRangeAsync(categories);
+            var categoryService = new CategoryService(dbContext);
+            var typeProductService = new ProductTypeService(dbContext);
+            await categoryService.AddRangeAsync(categories);
             await typeProductService.AddRangeAsync(types);
             await typeProductService.UpdataAsync(updateType);
 
@@ -193,9 +193,9 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeProductService = new ProductTypeRepository(dbContext);
-            await categoryRepository.AddRangeAsync(categories);
+            var categoryService = new CategoryService(dbContext);
+            var typeProductService = new ProductTypeService(dbContext);
+            await categoryService.AddRangeAsync(categories);
             await typeProductService.AddRangeAsync(types);
             await typeProductService.RemoveAsync(removeID);
 
@@ -212,9 +212,9 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeProductService = new ProductTypeRepository(dbContext);
-            await categoryRepository.AddRangeAsync(categories);
+            var categoryService = new CategoryService(dbContext);
+            var typeProductService = new ProductTypeService(dbContext);
+            await categoryService.AddRangeAsync(categories);
             await typeProductService.AddRangeAsync(types);
 
             //Act & Assert
@@ -227,9 +227,9 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeProductService = new ProductTypeRepository(dbContext);
-            await categoryRepository.AddRangeAsync(categories);
+            var categoryService = new CategoryService(dbContext);
+            var typeProductService = new ProductTypeService(dbContext);
+            await categoryService.AddRangeAsync(categories);
 
             //Act & Assert
             await Assert.ThrowsAsync<NotFoundException>(async () => { await typeProductService.AddAsync(addType); });

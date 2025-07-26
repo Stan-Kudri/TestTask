@@ -1,49 +1,42 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Ardalis.SmartEnum;
 using NPOI.SS.UserModel;
 using TestTask.Core.Exeption;
+using TestTask.Core.Import.Importers;
 
 namespace TestTask.Core.Extension
 {
     public static class SheetExtension
     {
-        public static Dictionary<T, int> ReadHeader<T>(this ISheet sheet, Dictionary<string, T> columns) where T : Enum
+        public static List<(TField Field, int Index)> ReadHeader<TModel, TField>(this ISheet sheet)
+        where TField : SmartEnum<TField>, IFieldHandler<TModel>
         {
-            var result = new Dictionary<T, int>(columns.Count);
             if (sheet.LastRowNum <= 0)
             {
                 throw new BusinessLogicException("File is empty");
             }
 
-            var rowFirst = sheet.GetRow(0);
-            var column = rowFirst.Cells.Count;
+            var headerRow = sheet.GetRow(0);
+            var result = new List<(TField, int)>();
 
-            for (int i = 0; i < column; i++)
+            foreach (var field in SmartEnum<TField>.List)
             {
-                var cell = rowFirst.GetCell(i);
-                if (cell == null)
+                bool found = false;
+                for (var i = 0; i < headerRow.Cells.Count; i++)
                 {
-                    continue;
+                    var str = headerRow.GetString(i, string.Empty);
+                    if (str.Success && str.Value == field.ColumnName)
+                    {
+                        result.Add((field, i));
+                        found = true;
+                        break;
+                    }
                 }
 
-                var str = rowFirst.GetString(i, string.Empty);
-                if (!str.Success || string.IsNullOrEmpty(str.Value))
+                if (!found)
                 {
-                    continue;
+                    throw new BusinessLogicException($"Missing column: {field.ColumnName}");
                 }
-
-                T field;
-                if (columns.TryGetValue(str.Value, out field))
-                {
-                    result[field] = i;
-                }
-            }
-
-            if (result.Count != columns.Count)
-            {
-                var notFoundColumns = columns.Select(e => e.Value).Except(result.Keys).ToList();
-                throw new BusinessLogicException($"Unnable to find columns: [{string.Join(", ", notFoundColumns)}]");
             }
 
             return result;

@@ -23,17 +23,17 @@ namespace TestTask.ChildForms.Import
                 = true;
         }
 
-        private readonly Dictionary<Tables, bool> SelectTables = new Dictionary<Tables, bool>()
+        private readonly Dictionary<Table, bool> SelectTables = new Dictionary<Table, bool>()
         {
-            { Tables.Company, true},
-            { Tables.Category, true},
-            { Tables.TypeProduct, true},
-            { Tables.Product, true}
+            { Table.Company, true},
+            { Table.Category, true},
+            { Table.TypeProduct, true},
+            { Table.Product, true}
         };
 
-        public HashSet<Tables> GetSelectTable()
+        public HashSet<Table> GetSelectTable()
         {
-            var selectTable = new HashSet<Tables>();
+            var selectTable = new HashSet<Table>();
 
             foreach (var table in SelectTables)
             {
@@ -59,15 +59,15 @@ namespace TestTask.ChildForms.Import
         }
 
         private void cbCompany_CheckedChanged(object sender, EventArgs e)
-            => SelectTables[Tables.Company] = cbCompany.Checked;
+            => SelectTables[Table.Company] = cbCompany.Checked;
 
         private void cbProduct_CheckedChanged(object sender, EventArgs e)
-            => SelectTables[Tables.Product] = cbProduct.Checked;
+            => SelectTables[Table.Product] = cbProduct.Checked;
 
         private void cbType_CheckedChanged(object sender, EventArgs e)
-            => SelectTables[Tables.TypeProduct] = cbType.Checked;
+            => SelectTables[Table.TypeProduct] = cbType.Checked;
 
         private void cbCategory_CheckedChanged(object sender, EventArgs e)
-            => SelectTables[Tables.Category] = cbCategory.Checked;
+            => SelectTables[Table.Category] = cbCategory.Checked;
     }
 }

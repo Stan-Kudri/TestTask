@@ -14,7 +14,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
         private const string ErrorFieldRequired = "Field is required.";
 
         [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
-        [Inject] private CategoryRepository CategoryRepository { get; set; } = null!;
+        [Inject] private CategoryService CategoryService { get; set; } = null!;
         [Inject] private IMessageBox MessageDialog { get; set; } = null!;
 
         private CategoryModel categoryModel { get; set; } = new CategoryModel();
@@ -36,7 +36,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
             BusinessLogicException.EnsureIdLessThenZero(Id);
 
             isAddItem = false;
-            oldItem = await CategoryRepository.GetItem((int)Id);
+            oldItem = await CategoryService.GetItem((int)Id);
             categoryModel = oldItem.GetCategoryModel();
         }
 
@@ -55,14 +55,14 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
                 return;
             }
 
-            if (!await CategoryRepository.IsFreeName(categoryModel.Name))
+            if (!await CategoryService.IsFreeName(categoryModel.Name))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
             }
 
             var item = categoryModel.GetCategory();
-            await CategoryRepository.AddAsync(item);
+            await CategoryService.AddAsync(item);
 
             MudDialog.Close();
         }
@@ -84,7 +84,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             var item = categoryModel.GetModifyCategory(oldItem.Id);
 
-            if (!await CategoryRepository.IsFreeNameItemUpsert(item))
+            if (!await CategoryService.IsFreeNameItemUpsert(item))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
@@ -92,7 +92,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             if (!oldItem.Equals(item))
             {
-                await CategoryRepository.UpdataAsync(item);
+                await CategoryService.UpdataAsync(item);
             }
 
             MudDialog.Close();

@@ -6,10 +6,10 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
 {
     public class ProductDetailProvider : ITableDetailProvider<Product>
     {
-        private readonly ProductRepository _productRepository;
+        private readonly ProductService _productService;
 
-        public ProductDetailProvider(ProductRepository productRepository)
-            => _productRepository = productRepository;
+        public ProductDetailProvider(ProductService productService)
+            => _productService = productService;
 
         public IReadOnlyList<ListTableColumn> Columns => new List<ListTableColumn>
         {
@@ -22,7 +22,7 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
         };
 
         public IQueryable<Product> GetQueryableAll()
-            => _productRepository.GetQueryableAll();
+            => _productService.GetQueryableAll();
 
         public IQueryable<Product> GetSearchName(IQueryable<Product> items, string? searchString)
             => string.IsNullOrEmpty(searchString)
@@ -33,8 +33,8 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
                                 || e.Type.Name.Contains(searchString)
                                 || e.Price.ToString(CultureInfo.InvariantCulture).Contains(searchString));
 
-        public async Task Remove(int id) => await _productRepository.RemoveAsync(id);
+        public async Task Remove(int id) => await _productService.RemoveAsync(id);
 
-        public async Task Upsert(Product entity) => await _productRepository.UpsertAsync(entity);
+        public async Task Upsert(Product entity) => await _productService.UpsertAsync(entity);
     }
 }

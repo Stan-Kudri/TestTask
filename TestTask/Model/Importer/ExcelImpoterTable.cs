@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using TestTask.Core;
 using TestTask.Core.DataTable;
@@ -8,28 +7,40 @@ using TestTask.Core.Models;
 
 namespace TestTask.Model.Importer
 {
-    public class ExcelImpoterTable<T>(IMessageBox messageBox, BaseRepository<T> repository, ExcelImporter<T> excelImport)
+    public class ExcelImpoterTable<T>
         : IExcelImpoterTable
         where T : Entity
     {
-        public async Task ImportAsync(HashSet<Tables> selectTable, string path)
+        private readonly IMessageBox _messageBox;
+        private readonly BaseService<T> _service;
+        private readonly ExcelImporter<T> _excelImporter;
+        private readonly Table _table;
+
+        public ExcelImpoterTable(IMessageBox messageBox, BaseService<T> service, ExcelImporter<T> excelImport, Table table)
         {
-            if (selectTable.Contains(Tables.Company))
+            _messageBox = messageBox;
+            _service = service;
+            _excelImporter = excelImport;
+            _table = table;
+        }
+
+        public Table Table => _table;
+
+        public async Task ImportAsync(string path)
+        {
+            var reader = _excelImporter.ImportFromFile(path);
+
+            foreach (var item in reader)
             {
-                var reader = excelImport.ImportFromFile(path);
-
-                foreach (var item in reader)
+                if (item.Success)
                 {
-                    if (item.Success)
-                    {
-                        await repository.UpsertAsync(item.Value);
-                    }
+                    await _service.UpsertAsync(item.Value);
                 }
+            }
 
-                if (!reader.IsNoErrorLine(out var message))
-                {
-                    await messageBox.ShowWarning(message, typeof(T).Name);
-                }
+            if (!reader.IsNoErrorLine(out var message))
+            {
+                await _messageBox.ShowWarning(message, typeof(T).Name);
             }
         }
     }

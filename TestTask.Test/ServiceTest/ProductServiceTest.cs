@@ -149,15 +149,15 @@ namespace TestTask.Test.ServiceTest
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
 
-            var companyRepository = new CompanyRepository(dbContext);
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeRepository = new ProductTypeRepository(dbContext);
-            var productRepository = new ProductRepository(dbContext);
+            var companyService = new CompanyService(dbContext);
+            var categoryService = new CategoryService(dbContext);
+            var typeService = new ProductTypeService(dbContext);
+            var productService = new ProductService(dbContext);
 
-            await companyRepository.AddAsync(company);
-            await categoryRepository.AddAsync(category);
-            await typeRepository.AddAsync(type);
-            await productRepository.AddRangeAsync(products);
+            await companyService.AddAsync(company);
+            await categoryService.AddAsync(category);
+            await typeService.AddAsync(type);
+            await productService.AddRangeAsync(products);
 
             //Act
             var actualProducts = dbContext.Product.ToList();
@@ -179,16 +179,16 @@ namespace TestTask.Test.ServiceTest
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
 
-            var companyRepository = new CompanyRepository(dbContext);
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeRepository = new ProductTypeRepository(dbContext);
-            var productRepository = new ProductRepository(dbContext);
+            var companyService = new CompanyService(dbContext);
+            var categoryService = new CategoryService(dbContext);
+            var typeService = new ProductTypeService(dbContext);
+            var productService = new ProductService(dbContext);
 
-            await companyRepository.AddAsync(company);
-            await categoryRepository.AddAsync(category);
-            await typeRepository.AddAsync(type);
-            await productRepository.AddRangeAsync(products);
-            await productRepository.AddAsync(addProduct);
+            await companyService.AddAsync(company);
+            await categoryService.AddAsync(category);
+            await typeService.AddAsync(type);
+            await productService.AddRangeAsync(products);
+            await productService.AddAsync(addProduct);
 
             //Act
             var actualProducts = dbContext.Product.ToList();
@@ -210,16 +210,16 @@ namespace TestTask.Test.ServiceTest
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
 
-            var companyRepository = new CompanyRepository(dbContext);
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeRepository = new ProductTypeRepository(dbContext);
-            var productRepository = new ProductRepository(dbContext);
+            var companyService = new CompanyService(dbContext);
+            var categoryService = new CategoryService(dbContext);
+            var typeService = new ProductTypeService(dbContext);
+            var productService = new ProductService(dbContext);
 
-            await companyRepository.AddAsync(company);
-            await categoryRepository.AddAsync(category);
-            await typeRepository.AddAsync(type);
-            await productRepository.AddRangeAsync(products);
-            await productRepository.UpdataAsync(updateProduct);
+            await companyService.AddAsync(company);
+            await categoryService.AddAsync(category);
+            await typeService.AddAsync(type);
+            await productService.AddRangeAsync(products);
+            await productService.UpdataAsync(updateProduct);
 
             //Act
             var actualProducts = dbContext.Product.ToList();
@@ -241,16 +241,16 @@ namespace TestTask.Test.ServiceTest
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
 
-            var companyRepository = new CompanyRepository(dbContext);
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeRepository = new ProductTypeRepository(dbContext);
-            var productRepository = new ProductRepository(dbContext);
+            var companyService = new CompanyService(dbContext);
+            var categoryService = new CategoryService(dbContext);
+            var typeService = new ProductTypeService(dbContext);
+            var productService = new ProductService(dbContext);
 
-            await companyRepository.AddAsync(company);
-            await categoryRepository.AddAsync(category);
-            await typeRepository.AddAsync(type);
-            await productRepository.AddRangeAsync(products);
-            await productRepository.RemoveAsync(removeId);
+            await companyService.AddAsync(company);
+            await categoryService.AddAsync(category);
+            await typeService.AddAsync(type);
+            await productService.AddRangeAsync(products);
+            await productService.RemoveAsync(removeId);
 
             //Act
             var actualProducts = dbContext.Product.ToList();
@@ -271,18 +271,18 @@ namespace TestTask.Test.ServiceTest
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
 
-            var companyRepository = new CompanyRepository(dbContext);
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeRepository = new ProductTypeRepository(dbContext);
-            var productRepository = new ProductRepository(dbContext);
+            var companyService = new CompanyService(dbContext);
+            var categoryService = new CategoryService(dbContext);
+            var typeService = new ProductTypeService(dbContext);
+            var productService = new ProductService(dbContext);
 
-            await companyRepository.AddAsync(company);
-            await categoryRepository.AddAsync(category);
-            await typeRepository.AddAsync(type);
-            await productRepository.AddRangeAsync(products);
+            await companyService.AddAsync(company);
+            await categoryService.AddAsync(category);
+            await typeService.AddAsync(type);
+            await productService.AddRangeAsync(products);
 
             //Assert
-            await Assert.ThrowsAsync<BusinessLogicException>(async () => { await productRepository.AddAsync(product); });
+            await Assert.ThrowsAsync<BusinessLogicException>(async () => { await productService.AddAsync(product); });
         }
 
         [Theory]
@@ -298,17 +298,17 @@ namespace TestTask.Test.ServiceTest
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
 
-            var companyRepository = new CompanyRepository(dbContext);
-            var categoryRepository = new CategoryRepository(dbContext);
-            var typeRepository = new ProductTypeRepository(dbContext);
-            var productRepository = new ProductRepository(dbContext);
+            var companyService = new CompanyService(dbContext);
+            var categoryService = new CategoryService(dbContext);
+            var typeService = new ProductTypeService(dbContext);
+            var productService = new ProductService(dbContext);
 
-            await companyRepository.AddAsync(company);
-            await categoryRepository.AddAsync(category);
-            await typeRepository.AddAsync(type);
+            await companyService.AddAsync(company);
+            await categoryService.AddAsync(category);
+            await typeService.AddAsync(type);
 
             //Assert
-            await Assert.ThrowsAsync<NotFoundException>(async () => { await productRepository.AddAsync(product); });
+            await Assert.ThrowsAsync<NotFoundException>(async () => { await productService.AddAsync(product); });
         }
     }
 }

@@ -24,7 +24,7 @@ namespace TestTask.Controls.PageTabControls
         private const int IndexColumnCountry = 3;
 
         private IServiceProvider _serviceProvider;
-        private CompanyRepository _companyRepository;
+        private CompanyService _companyRepository;
 
         private readonly SortCompanyModel _selectSortField = new SortCompanyModel();
         private bool _isAscending = true;
@@ -42,7 +42,7 @@ namespace TestTask.Controls.PageTabControls
         public void Initialize(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _companyRepository = _serviceProvider.GetRequiredService<CompanyRepository>();
+            _companyRepository = _serviceProvider.GetRequiredService<CompanyService>();
             listView.Initialize(this, serviceProvider.GetRequiredService<IMessageBox>());
             checkCmbField.Items.AddRange(_selectSortField.SelectField);
             LoadData();

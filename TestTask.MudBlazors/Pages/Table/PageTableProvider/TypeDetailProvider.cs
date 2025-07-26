@@ -5,10 +5,10 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
 {
     public class TypeDetailProvider : ITableDetailProvider<ProductType>
     {
-        private readonly ProductTypeRepository _typeRepository;
+        private readonly ProductTypeService _typeService;
 
-        public TypeDetailProvider(ProductTypeRepository productTypeRepository)
-            => _typeRepository = productTypeRepository;
+        public TypeDetailProvider(ProductTypeService productTypeService)
+            => _typeService = productTypeService;
 
         public IReadOnlyList<ListTableColumn> Columns => new List<ListTableColumn>
         {
@@ -18,7 +18,7 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
         };
 
         public IQueryable<ProductType> GetQueryableAll()
-            => _typeRepository.GetQueryableAll();
+            => _typeService.GetQueryableAll();
 
         public IQueryable<ProductType> GetSearchName(IQueryable<ProductType> items, string? searchString)
             => string.IsNullOrEmpty(searchString)
@@ -26,8 +26,8 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
                 : items.Where(e => e.Name.Contains(searchString)
                                 || e.Category.Name.Contains(searchString));
 
-        public async Task Remove(int id) => await _typeRepository.RemoveAsync(id);
+        public async Task Remove(int id) => await _typeService.RemoveAsync(id);
 
-        public async Task Upsert(ProductType entity) => await _typeRepository.UpsertAsync(entity);
+        public async Task Upsert(ProductType entity) => await _typeService.UpsertAsync(entity);
     }
 }

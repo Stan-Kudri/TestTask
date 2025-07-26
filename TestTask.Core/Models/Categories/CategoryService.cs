@@ -6,9 +6,26 @@ using TestTask.Core.Exeption;
 
 namespace TestTask.Core.Models.Categories
 {
-    public class CategoryRepository(AppDbContext appDbContext)
-        : BaseRepository<Category>(appDbContext, appDbContext.Category)
+    public class CategoryService(AppDbContext appDbContext)
+        : BaseService<Category>(appDbContext, appDbContext.Category)
     {
+        public override async Task AddAsync(Category item, CancellationToken cancellationToken = default)
+        {
+            BusinessLogicException.ThrowIfNull(item);
+
+            if (await _dbSet.AnyAsync(e => e.Id == item.Id, cancellationToken))
+            {
+                BusinessLogicException.ThrowUniqueIDBusy<Category>(item.Id);
+            }
+            if (await _dbSet.AnyAsync(e => e.Name == item.Name, cancellationToken))
+            {
+                return;
+            }
+
+            await _dbSet.AddAsync(item, cancellationToken);
+            await _appDbContext.SaveChangesAsync(cancellationToken);
+        }
+
         public override async Task UpsertAsync(Category item, CancellationToken cancellationToken = default)
         {
             var duplicateId = await _dbSet.FirstOrDefaultAsync(e => e.Id == item.Id, cancellationToken);

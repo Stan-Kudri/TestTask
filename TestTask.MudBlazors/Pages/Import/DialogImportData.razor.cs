@@ -13,10 +13,10 @@ namespace TestTask.MudBlazors.Pages.Import
 {
     public partial class DialogImportData
     {
-        [Inject] private CompanyRepository CompanyRepository { get; set; } = null!;
-        [Inject] private CategoryRepository CategoryRepository { get; set; } = null!;
-        [Inject] private ProductTypeRepository ProductTypeRepository { get; set; } = null!;
-        [Inject] private ProductRepository ProductRepository { get; set; } = null!;
+        [Inject] private CompanyService CompanyService { get; set; } = null!;
+        [Inject] private CategoryService CategoryService { get; set; } = null!;
+        [Inject] private ProductTypeService ProductTypeService { get; set; } = null!;
+        [Inject] private ProductService ProductService { get; set; } = null!;
         [Inject] private ExcelImporter<Company> ExcelImportCompany { get; set; } = null!;
         [Inject] private ExcelImporter<Category> ExcelImportCategory { get; set; } = null!;
         [Inject] private ExcelImporter<ProductType> ExcelImportTypeProduct { get; set; } = null!;
@@ -42,15 +42,15 @@ namespace TestTask.MudBlazors.Pages.Import
 
             MudDialog.Cancel();
 
-            Import(Tables.Company, memoryStream, ExcelImportCompany, CompanyRepository);
-            Import(Tables.Category, memoryStream, ExcelImportCategory, CategoryRepository);
-            Import(Tables.TypeProduct, memoryStream, ExcelImportTypeProduct, ProductTypeRepository);
-            Import(Tables.Product, memoryStream, ExcelImportProduct, ProductRepository);
+            Import(Core.DataTable.Table.Company, memoryStream, ExcelImportCompany, CompanyService);
+            Import(Core.DataTable.Table.Category, memoryStream, ExcelImportCategory, CategoryService);
+            Import(Core.DataTable.Table.TypeProduct, memoryStream, ExcelImportTypeProduct, ProductTypeService);
+            Import(Core.DataTable.Table.Product, memoryStream, ExcelImportProduct, ProductService);
 
             Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
         }
 
-        private void Import<T>(Tables table, MemoryStream memoryStream, ExcelImporter<T> excelImporter, BaseRepository<T> repository)
+        private void Import<T>(Core.DataTable.Table table, MemoryStream memoryStream, ExcelImporter<T> excelImporter, BaseService<T> service)
             where T : Entity
         {
             if (!_selectedTable.SelectTables.Contains(table))
@@ -65,7 +65,7 @@ namespace TestTask.MudBlazors.Pages.Import
             {
                 if (row.Success)
                 {
-                    repository.UpsertAsync(row.Value);
+                    service.UpsertAsync(row.Value);
                 }
             }
         }

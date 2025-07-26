@@ -5,20 +5,20 @@ namespace TestTask.Core.DataTable
 {
     public class SelectTable
     {
-        protected IEnumerable<Tables> _selectTable = new HashSet<Tables>();
+        protected IEnumerable<Table> _selectTable = new HashSet<Table>();
 
-        public Tables Table { get; set; }
+        public Table Table { get; set; }
 
         public SelectTable()
         {
         }
 
-        public virtual IEnumerable<Tables> SelectTables
+        public virtual IEnumerable<Table> SelectTables
         {
             get => _selectTable;
             set => _selectTable = value;
         }
 
-        public ObservableCollection<Tables> Items { get; set; } = new ObservableCollection<Tables>(Tables.List);
+        public ObservableCollection<Table> Items { get; set; } = new ObservableCollection<Table>(Table.List);
     }
 }

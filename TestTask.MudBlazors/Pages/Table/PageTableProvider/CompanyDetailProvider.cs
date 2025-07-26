@@ -5,10 +5,10 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableView
 {
     public class CompanyDetailProvider : ITableDetailProvider<Company>
     {
-        private readonly CompanyRepository _companyRepository;
+        private readonly CompanyService _companyService;
 
-        public CompanyDetailProvider(CompanyRepository companyRepository)
-            => _companyRepository = companyRepository;
+        public CompanyDetailProvider(CompanyService companyService)
+            => _companyService = companyService;
 
         public IReadOnlyList<ListTableColumn> Columns => new List<ListTableColumn>
         {
@@ -19,7 +19,7 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableView
         };
 
         public IQueryable<Company> GetQueryableAll()
-            => _companyRepository.GetQueryableAll();
+            => _companyService.GetQueryableAll();
 
         public IQueryable<Company> GetSearchName(IQueryable<Company> items, string? searchString)
             => string.IsNullOrEmpty(searchString)
@@ -28,8 +28,8 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableView
                                 || e.Country.Contains(searchString)
                                 || e.DateCreation.ToString().Contains(searchString));
 
-        public async Task Remove(int id) => await _companyRepository.RemoveAsync(id);
+        public async Task Remove(int id) => await _companyService.RemoveAsync(id);
 
-        public async Task Upsert(Company entity) => await _companyRepository.UpsertAsync(entity);
+        public async Task Upsert(Company entity) => await _companyService.UpsertAsync(entity);
     }
 }

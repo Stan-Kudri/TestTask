@@ -8,7 +8,7 @@ using TestTask.Core.Exeption;
 
 namespace TestTask.Core.Models
 {
-    public abstract class BaseRepository<T>(AppDbContext appDbContext, DbSet<T> dbSet)
+    public abstract class BaseService<T>(AppDbContext appDbContext, DbSet<T> dbSet)
         where T : Entity
     {
         protected readonly AppDbContext _appDbContext = appDbContext;
@@ -64,8 +64,8 @@ namespace TestTask.Core.Models
             }
         }
 
-        public async Task<List<T>> GetAll(CancellationToken cancellationToken = default)
-            => await _dbSet.AnyAsync(cancellationToken) ? [.. _dbSet.AsNoTracking()] : null;
+        public virtual Task<List<T>> GetAll(CancellationToken cancellationToken = default)
+            => _dbSet.AsNoTracking().ToListAsync(cancellationToken);
 
         public virtual IQueryable<T> GetQueryableAll() => _dbSet.AsNoTracking();
 

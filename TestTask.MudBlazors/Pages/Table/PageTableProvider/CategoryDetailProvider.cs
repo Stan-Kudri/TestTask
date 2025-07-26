@@ -5,10 +5,10 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
 {
     public class CategoryDetailProvider : ITableDetailProvider<Category>
     {
-        private readonly CategoryRepository _categoryRepository;
+        private readonly CategoryService _categoryService;
 
-        public CategoryDetailProvider(CategoryRepository categoryRepository)
-            => _categoryRepository = categoryRepository;
+        public CategoryDetailProvider(CategoryService categoryService)
+            => _categoryService = categoryService;
 
         public IReadOnlyList<ListTableColumn> Columns => new List<ListTableColumn>
         {
@@ -17,15 +17,15 @@ namespace TestTask.MudBlazors.Pages.Table.PageTableProvider
         };
 
         public IQueryable<Category> GetQueryableAll()
-            => _categoryRepository.GetQueryableAll();
+            => _categoryService.GetQueryableAll();
 
         public IQueryable<Category> GetSearchName(IQueryable<Category> items, string? searchString)
             => string.IsNullOrEmpty(searchString)
                 ? items
                 : items.Where(e => e.Name.Contains(searchString));
 
-        public async Task Remove(int id) => await _categoryRepository.RemoveAsync(id);
+        public async Task Remove(int id) => await _categoryService.RemoveAsync(id);
 
-        public async Task Upsert(Category entity) => await _categoryRepository.UpsertAsync(entity);
+        public async Task Upsert(Category entity) => await _categoryService.UpsertAsync(entity);
     }
 }

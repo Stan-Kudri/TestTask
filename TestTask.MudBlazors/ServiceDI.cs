@@ -41,9 +41,9 @@ namespace TestTask.MudBlazors
             builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 
             builder.Services.Scan(scan => scan
-                                    .FromAssemblies(typeof(BaseRepository<>).Assembly)
+                                    .FromAssemblies(typeof(BaseService<>).Assembly)
 
-                                        .AddClasses(repository => repository.AssignableTo(typeof(BaseRepository<>)))
+                                        .AddClasses(service => service.AssignableTo(typeof(BaseService<>)))
                                         .AsSelf()
                                         .WithScopedLifetime()
 

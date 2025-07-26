@@ -13,8 +13,8 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
     public partial class ProductTypeItemDialog : IItemDialog
     {
         [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
-        [Inject] private ProductTypeRepository ProductTypeRepository { get; set; } = null!;
-        [Inject] private CategoryRepository CategoryRepository { get; set; } = null!;
+        [Inject] private ProductTypeService ProductTypeService { get; set; } = null!;
+        [Inject] private CategoryService CategoryService { get; set; } = null!;
         [Inject] private IMessageBox MessageDialog { get; set; } = null!;
 
         private TypeProductModel typeProductModel { get; set; } = new TypeProductModel();
@@ -29,7 +29,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
         protected override async void OnInitialized()
         {
-            selectCategories = await CategoryRepository.GetAll();
+            selectCategories = await CategoryService.GetAll();
 
             if (Id == null)
             {
@@ -40,7 +40,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
             BusinessLogicException.EnsureIdLessThenZero(Id);
 
             isAddItem = false;
-            oldTypeProduct = await ProductTypeRepository.GetItem((int)Id);
+            oldTypeProduct = await ProductTypeService.GetItem((int)Id);
             typeProductModel = oldTypeProduct.GetTypeProductModel();
         }
 
@@ -59,14 +59,14 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
                 return;
             }
 
-            if (!await ProductTypeRepository.IsFreeName(typeProductModel.Name))
+            if (!await ProductTypeService.IsFreeName(typeProductModel.Name))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
             }
 
             var typeProduct = typeProductModel.GetProductType();
-            await ProductTypeRepository.AddAsync(typeProduct);
+            await ProductTypeService.AddAsync(typeProduct);
 
             MudDialog.Close();
         }
@@ -88,7 +88,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             var typeProduct = typeProductModel.GetModifyType(oldTypeProduct.Id);
 
-            if (!await ProductTypeRepository.IsFreeNameItemUpsert(typeProduct))
+            if (!await ProductTypeService.IsFreeNameItemUpsert(typeProduct))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
@@ -96,7 +96,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             if (!oldTypeProduct.Equals(typeProduct))
             {
-                await ProductTypeRepository.UpdataAsync(typeProduct);
+                await ProductTypeService.UpdataAsync(typeProduct);
             }
 
             MudDialog.Close();

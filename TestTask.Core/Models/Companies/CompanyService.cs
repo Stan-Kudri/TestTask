@@ -7,9 +7,26 @@ using TestTask.Core.Exeption;
 
 namespace TestTask.Core.Models.Companies
 {
-    public class CompanyRepository(AppDbContext appDbContext)
-        : BaseRepository<Company>(appDbContext, appDbContext.Company)
+    public class CompanyService(AppDbContext appDbContext)
+        : BaseService<Company>(appDbContext, appDbContext.Company)
     {
+        public override async Task AddAsync(Company item, CancellationToken cancellationToken = default)
+        {
+            BusinessLogicException.ThrowIfNull(item);
+
+            if (await _dbSet.AnyAsync(e => e.Id == item.Id, cancellationToken))
+            {
+                BusinessLogicException.ThrowUniqueIDBusy<Company>(item.Id);
+            }
+            if (await _dbSet.AnyAsync(e => e.Name == item.Name, cancellationToken))
+            {
+                return;
+            }
+
+            await _dbSet.AddAsync(item, cancellationToken);
+            await _appDbContext.SaveChangesAsync(cancellationToken);
+        }
+
         public override async Task UpsertAsync(Company item, CancellationToken cancellationToken = default)
         {
             var duplicateId = _dbSet.FirstOrDefault(e => e.Id == item.Id);

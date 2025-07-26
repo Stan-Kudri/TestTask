@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,8 +12,8 @@ using TestTask.Core.Models.Types;
 
 namespace TestTask.Core.Models.Products
 {
-    public class ProductRepository(AppDbContext appDbContext)
-        : BaseRepository<Product>(appDbContext, appDbContext.Product)
+    public class ProductService(AppDbContext appDbContext)
+        : BaseService<Product>(appDbContext, appDbContext.Product)
     {
         public override async Task AddAsync(Product item, CancellationToken cancellationToken = default)
         {
@@ -21,6 +22,11 @@ namespace TestTask.Core.Models.Products
             if (await _dbSet.AnyAsync(e => e.Id == item.Id, cancellationToken))
             {
                 BusinessLogicException.ThrowUniqueIDBusy<Product>(item.Id);
+            }
+
+            if (await _dbSet.AnyAsync(e => e.Name == item.Name, cancellationToken))
+            {
+                return;
             }
 
             await InvalidDBForItemProduct(item, cancellationToken);
@@ -58,6 +64,9 @@ namespace TestTask.Core.Models.Products
 
             await UpdataAsync(item, cancellationToken);
         }
+
+        public override Task<List<Product>> GetAll(CancellationToken cancellationToken = default)
+            => _dbSet.Include(e => e.Company).Include(e => e.Category).ThenInclude(e => e.Types).AsNoTracking().ToListAsync(cancellationToken);
 
         public override IQueryable<Product> GetQueryableAll()
             => _dbSet.Include(e => e.Company).Include(e => e.Category).ThenInclude(e => e.Types).AsNoTracking();

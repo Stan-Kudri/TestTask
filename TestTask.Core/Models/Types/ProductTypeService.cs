@@ -9,8 +9,8 @@ using TestTask.Core.Models.Categories;
 
 namespace TestTask.Core.Models.Types
 {
-    public class ProductTypeRepository(AppDbContext appDbContext)
-        : BaseRepository<ProductType>(appDbContext, appDbContext.Type)
+    public class ProductTypeService(AppDbContext appDbContext)
+        : BaseService<ProductType>(appDbContext, appDbContext.Type)
     {
         public override async Task AddAsync(ProductType item, CancellationToken cancellationToken = default)
         {
@@ -24,6 +24,11 @@ namespace TestTask.Core.Models.Types
             if (await appDbContext.Category.FirstOrDefaultAsync(e => e.Id == item.CategoryId, cancellationToken) == null)
             {
                 throw NotFoundException.NotFoundIdProperty<Category>(item.CategoryId);
+            }
+
+            if (await _dbSet.AnyAsync(e => e.Name == item.Name, cancellationToken))
+            {
+                return;
             }
 
             await _dbSet.AddAsync(item, cancellationToken);
@@ -62,6 +67,10 @@ namespace TestTask.Core.Models.Types
 
             await UpdataAsync(item, cancellationToken);
         }
+
+        public override Task<List<ProductType>> GetAll(CancellationToken cancellationToken = default)
+            => _dbSet.Include(e => e.Category).AsNoTracking().ToListAsync(cancellationToken);
+
         public override IQueryable<ProductType> GetQueryableAll()
             => _dbSet.Include(e => e.Category).Select(e => e);
 

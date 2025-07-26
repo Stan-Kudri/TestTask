@@ -12,7 +12,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
     public partial class CompanyItemDialog : IItemDialog
     {
         [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
-        [Inject] private CompanyRepository CompanyRepository { get; set; } = null!;
+        [Inject] private CompanyService CompanyService { get; set; } = null!;
         [Inject] private IMessageBox MessageDialog { get; set; } = null!;
 
         private CompanyModel companyModel { get; set; } = new CompanyModel();
@@ -34,7 +34,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
             BusinessLogicException.EnsureIdLessThenZero(Id);
 
             isAddItem = false;
-            oldCompany = await CompanyRepository.GetItem((int)Id);
+            oldCompany = await CompanyService.GetItem((int)Id);
             companyModel = oldCompany.GetCompanyModel();
         }
 
@@ -53,14 +53,14 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
                 return;
             }
 
-            if (!await CompanyRepository.IsFreeName(companyModel.Name))
+            if (!await CompanyService.IsFreeName(companyModel.Name))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
             }
 
             var company = companyModel.GetCompany();
-            await CompanyRepository.AddAsync(company);
+            await CompanyService.AddAsync(company);
 
             MudDialog.Close();
         }
@@ -82,7 +82,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             var company = companyModel.GetModifyCompany(oldCompany.Id);
 
-            if (!await CompanyRepository.IsFreeNameItemUpsert(company))
+            if (!await CompanyService.IsFreeNameItemUpsert(company))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
@@ -90,7 +90,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             if (!oldCompany.Equals(company))
             {
-                await CompanyRepository.UpdataAsync(company);
+                await CompanyService.UpdataAsync(company);
             }
 
             MudDialog.Close();

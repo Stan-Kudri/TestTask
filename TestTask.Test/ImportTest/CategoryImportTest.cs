@@ -61,7 +61,7 @@ namespace TestTask.Test.ImportTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
+            var categoryService = new CategoryService(dbContext);
             var memoryStream = new MemoryStream(Resources.DataIsAllFilledIn);
             var categoryImporter = new CategoryImporter();
             var categoryRead = new ExcelImporter<Category>(categoryImporter).Import(memoryStream);
@@ -70,7 +70,7 @@ namespace TestTask.Test.ImportTest
             {
                 if (item.Success)
                 {
-                    categoryRepository.UpsertAsync(item.Value);
+                    categoryService.UpsertAsync(item.Value);
                 }
             }
 

@@ -18,20 +18,20 @@ namespace TestTask.Forms
     public partial class MainForm : BaseForm
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly CompanyRepository _companyRepository;
-        private readonly ProductRepository _productRepository;
-        private readonly CategoryRepository _categoryRepository;
-        private readonly ProductTypeRepository _typeRepository;
+        private readonly CompanyService _companyService;
+        private readonly ProductService _productService;
+        private readonly CategoryService _categoryService;
+        private readonly ProductTypeService _typeRepository;
         private readonly ExcelImporterModel _importExcel;
 
         public MainForm(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _companyRepository = _serviceProvider.GetRequiredService<CompanyRepository>();
-            _categoryRepository = _serviceProvider.GetRequiredService<CategoryRepository>();
-            _typeRepository = _serviceProvider.GetRequiredService<ProductTypeRepository>();
-            _productRepository = _serviceProvider.GetRequiredService<ProductRepository>();
+            _companyService = _serviceProvider.GetRequiredService<CompanyService>();
+            _categoryService = _serviceProvider.GetRequiredService<CategoryService>();
+            _typeRepository = _serviceProvider.GetRequiredService<ProductTypeService>();
+            _productService = _serviceProvider.GetRequiredService<ProductService>();
             _importExcel = _serviceProvider.GetRequiredService<ExcelImporterModel>();
         }
 
@@ -57,7 +57,7 @@ namespace TestTask.Forms
 
         private async void TsmImportFromExcel_Click(object sender, EventArgs e)
         {
-            var selectTable = new HashSet<Tables>();
+            var selectTable = new HashSet<Table>();
 
             using (var impotDbForExcel = _serviceProvider.GetRequiredService<ImportDatabaseForm>())
             {
@@ -96,9 +96,9 @@ namespace TestTask.Forms
 
                 var fillers = new ISheetFiller[]
                 {
-                    new CompanySheetFiller(_companyRepository),
-                    new ProductSheetFiller(_productRepository),
-                    new CategorySheetFiller(_categoryRepository),
+                    new CompanySheetFiller(_companyService),
+                    new ProductSheetFiller(_productService),
+                    new CategorySheetFiller(_categoryService),
                     new TypeSheetFiller(_typeRepository),
                 };
 

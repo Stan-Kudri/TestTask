@@ -22,7 +22,7 @@ namespace TestTask.Core.Export
 
         public void ExportToFile(string path)
         {
-            using var fileStream = File.OpenWrite(Path.Combine(path));
+            using var fileStream = File.OpenWrite(path);
             Export(fileStream);
         }
     }

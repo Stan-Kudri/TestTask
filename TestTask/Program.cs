@@ -40,8 +40,8 @@ namespace TestTask
                 .AddSingleton(e => new SaveFileDialog() { Filter = "Excel Files |*.xlsx;*.xls;*.xlsm" })
                 .AddSingleton<ExcelImporterModel>()
                 .Scan(scan => scan
-                    .FromAssemblies(typeof(BaseRepository<>).Assembly)
-                        .AddClasses(repository => repository.AssignableTo(typeof(BaseRepository<>)))
+                    .FromAssemblies(typeof(BaseService<>).Assembly)
+                        .AddClasses(service => service.AssignableTo(typeof(BaseService<>)))
                         .AsSelf()
                         .WithScopedLifetime()
 

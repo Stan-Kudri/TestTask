@@ -15,10 +15,10 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
     public partial class ProductItemDialog : IItemDialog
     {
         [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
-        [Inject] private ProductRepository ProductRepository { get; set; } = null!;
-        [Inject] private CompanyRepository CompanyRepository { get; set; } = null!;
-        [Inject] private CategoryRepository CategoryRepository { get; set; } = null!;
-        [Inject] private ProductTypeRepository ProductTypeRepository { get; set; } = null!;
+        [Inject] private ProductService ProductService { get; set; } = null!;
+        [Inject] private CompanyService CompanyService { get; set; } = null!;
+        [Inject] private CategoryService CategoryService { get; set; } = null!;
+        [Inject] private ProductTypeService ProductTypeService { get; set; } = null!;
         [Inject] private IMessageBox MessageDialog { get; set; } = null!;
 
         private ProductModel productModel { get; set; } = new ProductModel();
@@ -39,8 +39,8 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
         protected override async void OnInitialized()
         {
-            selectCompanies = await CompanyRepository.GetAll();
-            selectCategories = await CategoryRepository.GetAll();
+            selectCompanies = await CompanyService.GetAll();
+            selectCategories = await CategoryService.GetAll();
 
             if (Id == null)
             {
@@ -51,8 +51,8 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
             BusinessLogicException.EnsureIdLessThenZero(Id);
 
             isAddItem = isDisabledType = false;
-            _oldProduct = await ProductRepository.GetItem((int)Id);
-            selectTypes = ProductTypeRepository.GetListTypesByCategory(_oldProduct.CategoryId);
+            _oldProduct = await ProductService.GetItem((int)Id);
+            selectTypes = ProductTypeService.GetListTypesByCategory(_oldProduct.CategoryId);
             productModel = _oldProduct.GetProductModel();
         }
 
@@ -71,14 +71,14 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
                 return;
             }
 
-            if (!await ProductRepository.IsFreeName(productModel.Name))
+            if (!await ProductService.IsFreeName(productModel.Name))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
             }
 
             var product = productModel.GetProductType();
-            await ProductRepository.AddAsync(product);
+            await ProductService.AddAsync(product);
 
             MudDialog.Close();
         }
@@ -100,7 +100,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             var product = productModel.GetModifyType(_oldProduct.Id);
 
-            if (!await ProductRepository.IsFreeNameItemUpsert(product))
+            if (!await ProductService.IsFreeNameItemUpsert(product))
             {
                 await MessageDialog.ShowWarning("Name is not free.");
                 return;
@@ -108,7 +108,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
 
             if (!_oldProduct.Equals(product))
             {
-                await ProductRepository.UpdataAsync(product);
+                await ProductService.UpdataAsync(product);
             }
 
             MudDialog.Close();
@@ -122,7 +122,7 @@ namespace TestTask.MudBlazors.Dialog.ItemTable
             productModel.Category = item;
 #pragma warning restore BL0005 // Component parameter should not be set outside of its component.
 
-            selectTypes = ProductTypeRepository.GetListTypesByCategory(productModel.Category.Id);
+            selectTypes = ProductTypeService.GetListTypesByCategory(productModel.Category.Id);
             productModel.Category.Types = selectTypes;
 
             if (productModel.Category == null || productModel.Category.Types == null)

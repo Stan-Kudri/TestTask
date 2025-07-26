@@ -3,11 +3,11 @@
 
 <MudDialog>
     <DialogContent>
-        <MudSelect T="Tables" Label="Select table" MultiSelection="true" @bind-Value="_selectedTable.Table"
+        <MudSelect T="Table" Label="Select table" MultiSelection="true" @bind-Value="_selectedTable.Table"
                    @bind-SelectedValues="_selectedTable.SelectTables" SelectAll="true" SelectAllText="All">
             @foreach (var item in _selectedTable.Items)
             {
-                <MudSelectItem T="Tables" Value="@item" />
+                <MudSelectItem T="Table" Value="@item" />
             }
         </MudSelect>        
     </DialogContent>

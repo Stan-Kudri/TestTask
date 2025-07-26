@@ -118,8 +118,8 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var categoryRepository = new CategoryRepository(dbContext);
-            await categoryRepository.AddRangeAsync(category);
+            var categoryService = new CategoryService(dbContext);
+            await categoryService.AddRangeAsync(category);
 
             //Act
             var actualCompanies = dbContext.Category.ToList();
@@ -134,7 +134,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var service = new CategoryRepository(dbContext);
+            var service = new CategoryService(dbContext);
             dbContext.Category.AddRange(categories);
             await dbContext.SaveChangesAsync();
             await service.AddAsync(addCategory);
@@ -152,7 +152,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var service = new CategoryRepository(dbContext);
+            var service = new CategoryService(dbContext);
             dbContext.Category.AddRange(categories);
             await dbContext.SaveChangesAsync();
             await service.UpdataAsync(updateCategory);
@@ -170,7 +170,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var service = new CategoryRepository(dbContext);
+            var service = new CategoryService(dbContext);
             dbContext.Category.AddRange(categories);
             await dbContext.SaveChangesAsync();
             await service.RemoveRangeAsync(removeID);
@@ -188,7 +188,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var service = new CategoryRepository(dbContext);
+            var service = new CategoryService(dbContext);
             await service.AddRangeAsync(categories);
 
             //Act
@@ -204,7 +204,7 @@ namespace TestTask.Test.ServiceTest
         {
             //Arrange
             using var dbContext = new TestDbContextFactory().Create();
-            var service = new CategoryRepository(dbContext);
+            var service = new CategoryService(dbContext);
             await service.AddRangeAsync(categories);
 
             //Assert
